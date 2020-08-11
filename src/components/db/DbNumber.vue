@@ -1,16 +1,32 @@
 /* DashBlocks: Number widget */
 <template>
-  <div class="db-number">
+  <div class="db-number" @click="clickFunction">
     <div class="db-n-content">
       <div v-if="hasTrend" class="db-n-layer">
-        <db-sparkline :_updated="_updated" :data="trend" :max="trendMax" :height="60" style="position:absolute;bottom:0;width:100%;"></db-sparkline>
+        <db-sparkline
+          :_updated="_updated"
+          :data="trend"
+          :max="trendMax"
+          :height="60"
+          style="position:absolute;bottom:0;width:100%;"
+        ></db-sparkline>
       </div>
       <div v-if="hasIcon" class="db-n-layer" style="text-align: right;">
-        <div class=""><i :class="iconClass"></i></div>
+        <div class>
+          <i :class="iconClass"></i>
+        </div>
       </div>
       <div v-if="hasPct" class="db-n-layer" style="text-align: right;">
         <div style="float: right;">
-          <db-easy-pie :_updated="_updated" :value="percentValue" :percentRanges="percentRanges" :lineWidth="8" :size="86" :dark="dark" fontSize="14px"></db-easy-pie>
+          <db-easy-pie
+            :_updated="_updated"
+            :value="percentValue"
+            :percentRanges="percentRanges"
+            :lineWidth="8"
+            :size="86"
+            :dark="dark"
+            fontSize="14px"
+          ></db-easy-pie>
         </div>
       </div>
       <div class="db-n-main">
@@ -39,62 +55,65 @@ export default {
   name: 'DbNumber',
   components: {
     DbSparkline,
-    DbEasyPie
+    DbEasyPie,
   },
   mixins: [dbStdProps],
   props: {
     value: {
       type: Number,
-      default: 0
+      default: 0,
     },
     format: {
       type: String,
-      default: '%d'
+      default: '%d',
     },
     total: {
       type: Number,
-      default: 0
+      default: 0,
     },
     trend: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
     trendMax: {
       type: Number,
-      default: null
+      default: null,
     },
     ranges: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
     percentRanges: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
     icon: {
       type: String,
-      default: ''
+      default: '',
     },
     title: String,
     subtitle: String,
     qualifier: {
       type: String,
-      default: ''
+      default: '',
     },
     footer: {
       type: String,
-      default: ''
+      default: '',
     },
     // TODO ???
     badge: {
       type: String,
-      default: ''
-    }
+      default: '',
+    },
+    click: {
+      type: Function,
+    },
   },
   data() {
     return {
       // TODO Better gradient for light and dark
-      trendGradient: ['#DCEDC8', '#FFF9C4', '#FFCCBC']
+      trendGradient: ['#DCEDC8', '#FFF9C4', '#FFCCBC'],
     };
   },
   /*
@@ -130,7 +149,7 @@ export default {
       } else {
         return 0;
       }
-    }
+    },
   },
   methods: {
     getRangeClass() {
@@ -144,7 +163,10 @@ export default {
       } else {
         return 'text-alarm';
       }
-    }
-  }
+    },
+    clickFunction() {
+      this.click();
+    },
+  },
 };
 </script>
