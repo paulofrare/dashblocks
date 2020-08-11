@@ -1,9 +1,7 @@
 .DS_Store
 node_modules
-dist
 demo
 pages
-/dist
 /demo
 /docs/.vuepress/dist
 /pages
