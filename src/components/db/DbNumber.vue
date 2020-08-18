@@ -25,7 +25,7 @@
           <div>
             <!--<db-trend-line :_updated="_updated" :data="trend" :gradient="trendGradient" :strokeWidth="4" :height="50"></db-trend-line>-->
           </div>
-          <div class="text-xxs db-txt-faded db-n-footer">{{ footer }}</div>
+          <div class="text-xxs db-txt-faded db-n-footer text-red">{{ footer }}</div>
         </div>
       </div>
     </div>
@@ -46,12 +46,12 @@ export default {
   mixins: [dbStdProps],
   props: {
     value: {
-      type: Number,
-      default: 0
-    },
-    format: {
       type: String,
-      default: '%d'
+      default: '0'
+    },
+    prefix: {
+      type: String,
+      default: ''
     },
     total: {
       type: Number,
@@ -130,11 +130,11 @@ export default {
       return this.icon + ' db-n-icon ' + this.getRangeClass();
     },
     formattedValue() {
-      return sprintf(this.format, this.value, this.qualifier);
+      return this.prefix + ' ' + this.value;
     },
     percentValue() {
       if (this.total > 0) {
-        return (this.value / this.total) * 100;
+        return (parseFloat(this.value) / this.total) * 100;
       } else {
         return 0;
       }
@@ -145,16 +145,16 @@ export default {
       if (!this.hasRanges) {
         return 'db-txt-faded';
       }
-      if (this.value <= this.ranges[0]) {
+      if (parseFloat(this.value) <= this.ranges[0]) {
         return 'text-success';
-      } else if (this.value <= this.ranges[1]) {
+      } else if (parseFloat(this.value) <= this.ranges[1]) {
         return 'text-warning';
       } else {
         return 'text-alarm';
       }
     },
     clickFunction() {
-      this.click();
+      this.click(this);
     }
   }
 };
