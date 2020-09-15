@@ -159,3 +159,13 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.db-number {
+  cursor: pointer;
+}
+
+.db-number:hover {
+  background-color: rgb(252, 252, 252);
+}
+</style>
